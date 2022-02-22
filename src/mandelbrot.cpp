@@ -4,6 +4,7 @@
 
 #include <tice.h>
 #include <keypadc.h>
+#include <graphx.h>
 
 namespace MandelBrot {
 
@@ -36,19 +37,21 @@ uint8_t calculateCoord(const cplx<T>& coord, uint8_t maxIterations) {
 bool calculate(
 	int24_t width,
 	int24_t height,
-	uint8_t maxIterations,
-	void(*draw)(int24_t,int24_t,uint8_t)
+	const uint8_t* colors,
+	uint8_t numColors
 ) {
 	kb_EnableOnLatch();
 	kb_ClearOnLatch();
+
+	const uint8_t maxIterations = numColors-1;
 
 	for (int24_t x = 0; x < width; ++x) {
 		for (int24_t y = height/2; y >= 0; --y) {
 			const cplx<T> coord = xyToCoord(x, y);
 			const uint8_t iterations = calculateCoord(coord, maxIterations);
 
-			draw(x,y,iterations);
-			draw(x,height-y,iterations);
+			gfx_vbuffer[y][x] = colors[maxIterations-iterations];
+			gfx_vbuffer[height-y][x] = colors[maxIterations-iterations];
 		}
 
 		if (kb_On) {
