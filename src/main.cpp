@@ -4,7 +4,6 @@
 #include <cstring>
 
 #include "mandelbrot.h"
-#include "types.h"
 
 //const uint8_t COLORS[] = {0,1,2,3,4,5,6,7,39,71,103,135,167,199,231,255};
 //const uint8_t COLORS[] = {0,8,16,24,25,26,27,28,29,30,31,63,95,127,159,191,223};
