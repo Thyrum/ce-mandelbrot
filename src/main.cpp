@@ -1,6 +1,8 @@
 #include <tice.h>
 #include <graphx.h>
 
+#include <cstring>
+
 #include "mandelbrot.h"
 #include "types.h"
 
@@ -43,18 +45,7 @@ int main(void) {
 		elapsed_real = os_FloatToReal(elapsed <= 0.001f ? 0.0f : elapsed);
 
 		os_RealToStr(str, &elapsed_real, 8, 1, 2);
-
-		// Add ` sec.` affix
-		for (int i = 0; i < 14; ++i) {
-			if (str[i] == '\0') {
-				str[i]   = ' ';
-				str[i+1] = 's';
-				str[i+2] = 'e';
-				str[i+3] = 'c';
-				str[i+4] = '\0';
-				break;
-			}
-		}
+		strcat(str, " sec");
 
 		gfx_PrintStringXY(str, 5, 5);
 		while (!os_GetCSC());
